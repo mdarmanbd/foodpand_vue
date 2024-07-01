@@ -6,11 +6,8 @@ export default {
   ],
   theme: {
     extend: {
-      fontFamily:{
-        'raleway' : ['Raleway'],
-        'rubik' : ['Rubik']
-      },
       colors:{
+        colorBase : '#ff2b85',
         midnightBlue : '#040D12',
         charcoal : '#333333',
         raspberryPink : '#e21b70',
