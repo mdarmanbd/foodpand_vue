@@ -1,16 +1,17 @@
 <script setup>
-import {ref} from 'vue'
-import { onClickOutside } from '@vueuse/core'
+import {reactive, ref} from 'vue';
+import Modal from './Modal.vue';
 
-const modal = ref(null);
-const isModalOpen = ref(false);
-const discountValue = ref('')
 
-onClickOutside(modal, ()=>{ isModalOpen.value = false });
+const modalObject = reactive({
+    isModalOpen : false,
+    discountValue : ''
+})
+
 
 const isCardModalOpen = (value) => {
-    isModalOpen.value = true;
-    discountValue.value = value
+    modalObject.isModalOpen = true;
+    modalObject.discountValue = value;
 }
 
 
@@ -104,44 +105,13 @@ const isCardModalOpen = (value) => {
                 </small>
             </div>
         </div>
-        <Teleport to="body">
-            <Transition name="modal">
-                <div v-if="isModalOpen" class="fixed top-0 left-0 w-full h-full bg-gray-200 bg-opacity-50 flex justify-center items-center">
-                    <div class="modal m-auto" ref="modal">
-                        <div @click="isModalOpen = false" class="flex justify-end cursor-pointer">
-                            X
-                        </div>
-                        <div class="opacity-100 w-full block text-center text-black">
-                            Amount of discount : {{ discountValue }}
-                        </div>
-                    </div>
-                </div>
-            </Transition>
-        </Teleport>
+
+        <Modal :modalObject = 'modalObject'/>
+
     </div>
 
 </template>
 
 <style scoped>
-    .modal-enter-active {
-        transition: all 0.2s ease-out;
-    }
-
-
-    .modal-enter-from, .modal-leave-to {
-        opacity: o;
-        transform: scale(0.9);
-    }
-
-  .modal {
-  position: fixed;
-  z-index: 999;
-  top: 30%;
-  width: 300px;
-  height: 200px;
-  background: rgb(203, 244, 203);
-}
-
-
 
 </style>
