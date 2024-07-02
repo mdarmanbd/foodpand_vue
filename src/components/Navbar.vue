@@ -5,7 +5,7 @@
 </script>
 
 <template>
-    <header class="hidden md:block bg-white shadow-lg border-b">
+    <header class="hidden md:block bg-white shadow-lg border-b sticky top-0 z-50">
         <nav class="w-full lg:w-[1250px] m-auto flex items-center py-3">
             <div class="pl-2 lg:pl-0 flex items-center float-start">
                 <img class="bg-colorBase p-0.5 rounded" src="../svg/panda.svg">
@@ -21,10 +21,10 @@
                 </p>
             </div>
             <div class="ml-auto flex space-x-5">
-                <button class="bg-transparent border border-colorBase rounded px-2.5 py-1 text-colorBase text-sm font-normal">
+                <button class=" transition duration-300 ease-in-out hover:translate-y-1 bg-transparent border border-colorBase rounded px-2.5 py-1 text-colorBase text-sm font-normal">
                     Log in
                 </button>
-                <button class="bg-colorBase border rounded px-2.5 py-1 text-white text-sm font-normal">
+                <button class="bg-colorBase border rounded px-2.5 py-1 text-white text-sm font-normal transition duration-300 ease-in-out hover:translate-y-1 ">
                     Sign up
                 </button>
                 <div class="pr-2">
@@ -52,11 +52,8 @@
             <p class="text-sm text-colorBase font-medium ml-1">
                 Select your address
             </p>
-        </div>
-            
+        </div>  
     </div>
-
-
 
 </template>
 
