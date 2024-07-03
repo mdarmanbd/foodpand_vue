@@ -5,13 +5,15 @@ import Modal from './Modal.vue';
 
 const modalObject = reactive({
     isModalOpen : false,
-    discountValue : ''
+    discountPercentage : null,
+    price : null,
 })
 
 
-const isCardModalOpen = (value) => {
+const isCardModalOpen = (percentage, price) => {
     modalObject.isModalOpen = true;
-    modalObject.discountValue = value;
+    modalObject.discountPercentage = percentage;
+    modalObject.price = price
 }
 
 
@@ -65,11 +67,11 @@ const isCardModalOpen = (value) => {
             Available deals
         </h3>
         <div class="grid grid-cols-4 gap-5">
-            <div @click="isCardModalOpen(100)" class="border border-gray-400 px-3 py-2 rounded-lg hover:shadow-lg hover:border-pink-100 hover:bg-pink-100 duration-300 cursor-pointer transition-all">
+            <div @click="isCardModalOpen(10, 399)" class="border border-gray-400 px-3 py-2 rounded-lg hover:shadow-lg hover:border-pink-100 hover:bg-pink-100 duration-300 cursor-pointer transition-all">
                 <div class="flex items-center">
                     <img src="../svg/listBook.svg">
                     <span class="text-base text-gray-700 font-medium ml-1 font-sans">
-                        Tk 100 off
+                        Tk 10% off
                     </span>
                 </div>
                 <small class="font-sans text-sm text-gray-700 font-medium">
@@ -78,11 +80,11 @@ const isCardModalOpen = (value) => {
                     Use in cart.
                 </small>
             </div>
-            <div @click="isCardModalOpen(65)" class="border border-gray-400 px-3 py-2 rounded-lg hover:shadow-lg hover:border-pink-100 hover:bg-pink-100 duration-300 cursor-pointer transition-all">
+            <div @click="isCardModalOpen(60, 499)" class="border border-gray-400 px-3 py-2 rounded-lg hover:shadow-lg hover:border-pink-100 hover:bg-pink-100 duration-300 cursor-pointer transition-all">
                 <div class="flex items-center">
                     <img src="../svg/listBook.svg">
                     <span class="text-base text-gray-700 font-medium ml-1 font-sans">
-                        Tk 65 off
+                        Tk 60% off
                     </span>
                 </div>
                 <small class="font-sans text-sm text-gray-700 font-medium">
@@ -91,11 +93,11 @@ const isCardModalOpen = (value) => {
                     Use in cart.
                 </small>
             </div>
-            <div @click="isCardModalOpen(150)" class="border border-gray-400 px-3 py-2 rounded-lg hover:shadow-lg hover:border-pink-100 hover:bg-pink-100 duration-300 cursor-pointer transition-all">
+            <div @click="isCardModalOpen(30, 599)" class="border border-gray-400 px-3 py-2 rounded-lg hover:shadow-lg hover:border-pink-100 hover:bg-pink-100 duration-300 cursor-pointer transition-all">
                 <div class="flex items-center">
                     <img src="../svg/listBook.svg">
                     <span class="text-base text-gray-700 font-medium ml-1 font-sans">
-                        Tk 150 off
+                        Tk 30% off
                     </span>
                 </div>
                 <small class="font-sans text-sm text-gray-700 font-medium">
