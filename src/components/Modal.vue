@@ -33,7 +33,7 @@ const discountPrice = () => {
                         <div class="flex py-3 items-center">
                             <img class="w-5" src="../svg/listBook.svg">
                             <h3 class="ml-1 text-lg font-semibold text-gray-700 font-sans">
-                                {{ modalObject.discountPercentage }}% off
+                                {{ modalObject.discountPercentage }}% Off
                             </h3>
                         </div>
                         <p class="text-base text-gray-600 font-normal pb-2">
