@@ -103,7 +103,7 @@ const isCardModalOpen = (percentage, price) => {
                 <small class="font-sans text-sm text-gray-700 font-medium">
                     Min order Tk 599. Valid for all items.
                     <br>
-                    Use in cart. 
+                    Use in cart to. 
                 </small>
             </div>
         </div>
