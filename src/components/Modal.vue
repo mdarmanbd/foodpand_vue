@@ -7,6 +7,8 @@ const props = defineProps([
     'modalObject'
 ])
 
+const isConditionOpen = ref(false);
+
 const modal = ref(null);
 onClickOutside(modal, ()=>{ props.modalObject.isModalOpen = false });
 
@@ -16,6 +18,11 @@ const discountPrice = () => {
     let previousPrice = props.modalObject.price;
     let discountAmout = previousPrice * (percentage / 100);
     return ( Math.round(previousPrice - discountAmout) );
+}
+
+
+const isOpenTermsAndCondition = () => {
+    console.log('Terms $ condition')
 }
 
 </script>
@@ -48,13 +55,31 @@ const discountPrice = () => {
                         <small class="text-colorBase text-sm font-medium block">
                             Use voucher in cart
                         </small>
-                        <div class="cursor-pointer flex items-center mt-2 mb-3 hover:bg-pink-100 w-fit py-1 px-2 rounded-md">
+                        <div @click="isConditionOpen = !isConditionOpen" class="cursor-pointer flex items-center mt-2 mb-3 hover:bg-pink-100 w-fit py-1 px-2 rounded-md">
                             <p class="text-base text-colorBase font-medium">
                                 Terms & Conditions
                             </p>
                             <img class="w-5 p-0.5 bg-white border rounded-full hover:bg-pink-50 ml-1" src="../svg/downArrow.svg">
                         </div>
-
+                        <transition name="termsAndCondition">
+                            <ul v-if = 'isConditionOpen'>
+                                <li>
+                                    <a href="#">
+                                        Heloo world
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#">
+                                        Heloo world
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#">
+                                        Heloo world
+                                    </a>
+                                </li>
+                            </ul>
+                        </transition>
                     </div>
                 </div>
             </div>
@@ -63,6 +88,19 @@ const discountPrice = () => {
 </template>
 
 <style scoped>
+
+.termsAndCondition-enter-active,
+.termsAndCondition-leave-active {
+    transition: all 0.4s ease;
+}
+
+
+.termsAndCondition-enter-from,
+.termsAndCondition-leave-to {
+    opacity: 0;
+    transform: translateY(-20px);
+}
+
    .modal-enter-active {
         transition: all 0.2s ease-out;
     }
