@@ -59,23 +59,34 @@ const isOpenTermsAndCondition = () => {
                             <p class="text-base text-colorBase font-medium">
                                 Terms & Conditions
                             </p>
-                            <img class="w-5 p-0.5 bg-white border rounded-full hover:bg-pink-50 ml-1" src="../svg/downArrow.svg">
+                            <img v-if="!isConditionOpen" class="w-5 p-0.5 bg-white border rounded-full hover:bg-pink-50 ml-1" src="../svg/downArrow.svg">
+                            <img v-if="isConditionOpen" class="w-5 p-0.5 bg-white border rounded-full hover:bg-pink-50 ml-1" src="../svg/upArrow.svg">
                         </div>
                         <transition name="termsAndCondition">
-                            <ul v-if = 'isConditionOpen'>
+                            <ul v-if = 'isConditionOpen' class="p-2.5 space-y-1 w-fit bg-pink-50 rounded [&>li]:text-base [&>li]:font-normal [&>li]:text-gray-700">
                                 <li>
                                     <a href="#">
-                                        Heloo world
+                                        Condition number one
                                     </a>
                                 </li>
                                 <li>
                                     <a href="#">
-                                        Heloo world
+                                        Condition number one
                                     </a>
                                 </li>
                                 <li>
                                     <a href="#">
-                                        Heloo world
+                                        Condition number one
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#">
+                                        Condition number one
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#">
+                                        Condition number one
                                     </a>
                                 </li>
                             </ul>
@@ -101,25 +112,25 @@ const isOpenTermsAndCondition = () => {
     transform: translateY(-20px);
 }
 
-   .modal-enter-active {
-        transition: all 0.2s ease-out;
-    }
+.modal-enter-active {
+    transition: all 0.2s ease-out;
+}
 
-    .modal-enter-from, .modal-leave-to {
-        opacity: o;
-        transform: scale(0.9);
-    }
+.modal-enter-from, .modal-leave-to {
+    opacity: o;
+    transform: scale(0.9);
+}
 
-    .modal {
-        position: fixed;
-        z-index: 999;
-        top: 30%;
-        width: 550px;
-        height: 350px;
-        padding: 10px 15px;
-        overflow: auto;
-        background: white;
-        border-radius: 10px;
-    }
+.modal {
+    position: fixed;
+    z-index: 999;
+    top: 30%;
+    width: 550px;
+    height: 350px;
+    padding: 10px 15px;
+    overflow: auto;
+    background: white;
+    border-radius: 10px;
+}
 
 </style>
