@@ -5,7 +5,7 @@
 </script>
 
 <template>
-    <header class="hidden md:block bg-white shadow-lg border-b sticky top-0 z-50">
+    <header class="hidden md:block bg-white shadow-lg border-b sticky top-0 z-20">
         <nav class="w-full lg:w-[1250px] m-auto flex items-center py-3">
             <div class="pl-2 lg:pl-0 flex items-center float-start">
                 <img class="bg-colorBase p-0.5 rounded" src="../svg/panda.svg">

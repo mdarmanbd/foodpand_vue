@@ -48,7 +48,7 @@ const scrollRight = () => {
 </script>
 
 <template>
-  <section class="w-full bg-white py-3 shadow-lg">
+  <section class="w-full bg-white py-3 shadow-lg sticky top-14 z-10">
     <div class="w-[1250px] m-auto ">
         <div class="flex items-center space-x-5 overflow-x-hidden">
             <input type="text" class="w-64 bg-gray-100 rounded-xl py-1.5 px-3 focus:outline-none text-base text-gray-700" placeholder="search in menu">

@@ -1,11 +1,13 @@
 <script setup>
 import { reactive, ref } from 'vue';
+import MenuCart from './MenuCart.vue';
 import axios from 'axios';
 
 
 const italianItems = ref([]);
 const asianItems = ref([]);
 const americanItems = ref([]);
+const Items = ref([]);
 
 // const cuisineItems = ref([]);
 // const uniqueCuisines = ref([]);
@@ -25,7 +27,7 @@ const americanItems = ref([]);
 // })
 
 const italianMenus = () => {
-    axios.get('https://dummyjson.com/recipes?limit=5')
+    axios.get('https://dummyjson.com/recipes?limit=5&select=name,caloriesPerServing,instructions,image')
     .then (response => {
         italianItems.value = response.data.recipes
     })
@@ -33,14 +35,14 @@ const italianMenus = () => {
 };
 
 const asianMenus = () => {
-    axios.get('https://dummyjson.com/recipes?limit=4&skip=5')
+    axios.get('https://dummyjson.com/recipes?limit=4&skip=5&select=name,caloriesPerServing,instructions,image')
     .then(response => {
         asianItems.value = response.data.recipes
     })
 };
 
 const americanMenus = () => {
-    axios.get('https://dummyjson.com/recipes?limit=6&skip=9')
+    axios.get('https://dummyjson.com/recipes?limit=6&skip=9&select=name,caloriesPerServing,instructions,image')
     .then(response => {
         americanItems.value = response.data.recipes
     })
@@ -51,9 +53,53 @@ asianMenus();
 americanMenus();
 
 
-const clickItalianItem = (italianItem) => {
-    console.log(italianItem.id)
+const selectItalianItems = (italianItem) => {
+    const index = Items.value.findIndex( items => items.id == italianItem.id )
+    if( index !== -1 ){
+        Items.value[index].quantity++;
+    }else{
+        Items.value.push( {
+                ...italianItem,
+                quantity : 1
+            }
+        )
+    }
+    saveItemsInLocalstroage();
+};
+
+const selectAsianItems = (italianItem) => {
+    const index = Items.value.findIndex( items => items.id == italianItem.id )
+    if( index !== -1 ){
+        Items.value[index].quantity++;
+    }else{
+        Items.value.push( {
+                ...italianItem,
+                quantity : 1
+            }
+        )
+    }
+    saveItemsInLocalstroage();
+};
+
+const selectAmericanItems = (italianItem) => {
+    const index = Items.value.findIndex( items => items.id == italianItem.id )
+    if( index !== -1 ){
+        Items.value[index].quantity++;
+    }else{
+        Items.value.push( {
+                ...italianItem,
+                quantity : 1
+            }
+        )
+    }
+    saveItemsInLocalstroage();
+};
+
+
+const saveItemsInLocalstroage = () => {
+    localStorage.setItem('Items', JSON.stringify(Items.value));
 }
+
 
 
 </script>
@@ -73,7 +119,7 @@ const clickItalianItem = (italianItem) => {
                         </h3>
                         <div class="grid grid-cols-12 gap-3 ">
                             <div v-for="italianItem in italianItems" :key="italianItem.id" class="col-span-6 cursor-pointer hover:bg-pink-100 duration-200 hover:shadow p-3 border border-gray-200 rounded">
-                                <div @click="clickItalianItem(italianItem)" class="grid grid-cols-12">
+                                <div @click="selectItalianItems(italianItem)" class="grid grid-cols-12">
                                     <div class="col-span-9">
                                         <h3 class="text-gray-800 text-base font-medium">
                                             {{ italianItem.name }}
@@ -82,7 +128,7 @@ const clickItalianItem = (italianItem) => {
                                            price : {{ italianItem.caloriesPerServing }}
                                         </p>
                                        
-                                        <p class="text-gray-600 text-sm font-normal">
+                                        <p class="text-gray-600 text-sm font-normal pr-1 pb-1">
                                             {{ italianItem.instructions[1] }}
                                         </p>
                                     </div>
@@ -95,10 +141,6 @@ const clickItalianItem = (italianItem) => {
                                 </div>
                             </div>
                         </div>
-                        <!-- <div v-for="italianItem in italianItems" :key="italianItem.id" class="">
-                            <img :src="italianItem.image" class="w-20">
-                        </div> -->
-
                     </div>
                     <div class="mt-5">
                         <h3 class="text-gray-800 text-lg font-semibold pb-3">
@@ -106,7 +148,7 @@ const clickItalianItem = (italianItem) => {
                         </h3>
                         <div class="grid grid-cols-12 gap-3 ">
                             <div v-for="asianItem in asianItems" :key="asianItem.id" class="col-span-6 cursor-pointer hover:bg-pink-100 duration-200 hover:shadow p-3 border border-gray-200 rounded">
-                                <div class="grid grid-cols-12 ">
+                                <div @click="selectAsianItems(asianItem)" class="grid grid-cols-12 ">
                                     <div class="col-span-9">
                                         <h3 class="text-gray-800 text-base font-medium">
                                             {{ asianItem.name }}
@@ -115,7 +157,7 @@ const clickItalianItem = (italianItem) => {
                                            price : {{ asianItem.caloriesPerServing }}
                                         </p>
                                        
-                                        <p class="text-gray-600 text-sm font-normal">
+                                        <p class="text-gray-600 text-sm font-normal pr-1 pb-1">
                                             {{ asianItem.instructions[1] }}
                                         </p>
                                     </div>
@@ -127,12 +169,7 @@ const clickItalianItem = (italianItem) => {
                                     </div>
                                 </div>
                             </div>
-                            
                         </div>
-                        <!-- <div v-for="italianItem in italianItems" :key="italianItem.id" class="">
-                            <img :src="italianItem.image" class="w-20">
-                        </div> -->
-
                     </div>
                     <div class="mt-5">
                         <h3 class="text-gray-800 text-lg font-semibold pb-3">
@@ -140,7 +177,7 @@ const clickItalianItem = (italianItem) => {
                         </h3>
                         <div class="grid grid-cols-12 gap-3 ">
                             <div v-for="americanItem in americanItems" :key="americanItem.id" class="col-span-6 cursor-pointer hover:bg-pink-100 duration-200 hover:shadow p-3 border border-gray-200 rounded">
-                                <div class="grid grid-cols-12 ">
+                                <div @click="selectAmericanItems(americanItem)" class="grid grid-cols-12 ">
                                     <div class="col-span-9">
                                         <h3 class="text-gray-800 text-base font-medium">
                                             {{ americanItem.name }}
@@ -149,8 +186,8 @@ const clickItalianItem = (italianItem) => {
                                            price : {{ americanItem.caloriesPerServing }}
                                         </p>
                                        
-                                        <p class="two-line text-gray-600 text-sm font-normal">
-                                            {{ americanItem.instructions[3] }}
+                                        <p class="two-line text-gray-600 text-sm font-normal pr-1 pb-1">
+                                            {{ americanItem.instructions[4] }}
                                         </p>
                                     </div>
                                     <div class="col-span-3 relative">
@@ -164,10 +201,8 @@ const clickItalianItem = (italianItem) => {
                         </div>
                     </div>
                 </div>
-                <div class="col-span-4 bg-pink-100">
-                    <h3>
-                        Hello world 2
-                    </h3>
+                <div class="col-span-4 ">
+                    <MenuCart/>
                 </div>
             </div>
             

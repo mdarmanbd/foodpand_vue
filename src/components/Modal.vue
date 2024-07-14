@@ -30,7 +30,7 @@ const isOpenTermsAndCondition = () => {
 <template>
     <Teleport to="body">
         <Transition name="modal">
-            <div v-if="modalObject.isModalOpen" class="fixed top-0 left-0 w-full h-full bg-black bg-opacity-50 flex justify-center items-center">
+            <div v-if="modalObject.isModalOpen" class="fixed top-0 left-0 z-30 w-full h-full bg-black bg-opacity-50 flex justify-center items-center">
                 <div class="modal m-auto shadow-md" ref="modal">
                     <div class="flex justify-between">
                         <h3 class="text-lg font-medium text-gray-700">Offers details</h3>
@@ -123,7 +123,7 @@ const isOpenTermsAndCondition = () => {
 
 .modal {
     position: fixed;
-    z-index: 999;
+    /* z-index: 999; */
     top: 30%;
     width: 550px;
     height: 350px;
