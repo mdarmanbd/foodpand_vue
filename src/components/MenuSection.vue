@@ -2,24 +2,59 @@
 import { reactive, ref } from 'vue';
 import axios from 'axios';
 
-const items = ref([]);
-const uniqueItems = ref([]);
 
-axios.get('https://dummyjson.com/recipes?limit=10')
-.then(response => {
-    items.value = response.data.recipes
-    console.log(items.value)
+const italianItems = ref([]);
+const asianItems = ref([]);
+const americanItems = ref([]);
 
-    for(let i = 0 ; i < items.value.length; i++ ){
-        if(items.value[i].cuisine == uniqueItems[i].cuisine ){
-            uniqueItems[i].cuisine 
-        }else{
-            uniqueItems[i] = items.value[i].cuisine
-        }
-    }
-})
+// const cuisineItems = ref([]);
+// const uniqueCuisines = ref([]);
+// const cuisineSet = new Set();
 
-console.log(uniqueItems.value)
+// axios.get('https://dummyjson.com/recipes?limit=10')
+// .then(response => {
+//     cuisineItems.value = response.data.recipes
+
+//     for (let i = 0; i < cuisineItems.value.length; i++) {
+//         const cuisine = cuisineItems.value[i].cuisine;
+//         if (!cuisineSet.has(cuisine)) {
+//             cuisineSet.add(cuisine);
+//             uniqueCuisines.value.push(cuisine);
+//         }
+//     }
+// })
+
+const italianMenus = () => {
+    axios.get('https://dummyjson.com/recipes?limit=5')
+    .then (response => {
+        italianItems.value = response.data.recipes
+    })
+
+};
+
+const asianMenus = () => {
+    axios.get('https://dummyjson.com/recipes?limit=4&skip=5')
+    .then(response => {
+        asianItems.value = response.data.recipes
+    })
+};
+
+const americanMenus = () => {
+    axios.get('https://dummyjson.com/recipes?limit=6&skip=9')
+    .then(response => {
+        americanItems.value = response.data.recipes
+    })
+};
+
+italianMenus();
+asianMenus();
+americanMenus();
+
+
+const clickItalianItem = (italianItem) => {
+    console.log(italianItem.id)
+}
+
 
 </script>
 
@@ -27,11 +62,107 @@ console.log(uniqueItems.value)
 <template>
     <section class="w-full bg-white mt-10">
         <div class="w-[1250px] m-auto ">
-            <div class="grid grid-cols-12">
-                <div class="col-span-8 bg-pink-300">
-                    <h3>
-                        Hello world 
-                    </h3>
+            <div class="grid grid-cols-12 gap-4">
+                <div class="col-span-8 mb-5">
+                    <div class="">
+                        <h3 class="text-gray-800 text-lg font-semibold pb-3">
+                            Italian
+                            <small class="text-gray-600 text-sm font-normal block">
+                                Most order right now.
+                            </small>
+                        </h3>
+                        <div class="grid grid-cols-12 gap-3 ">
+                            <div v-for="italianItem in italianItems" :key="italianItem.id" class="col-span-6 cursor-pointer hover:bg-pink-100 duration-200 hover:shadow p-3 border border-gray-200 rounded">
+                                <div @click="clickItalianItem(italianItem)" class="grid grid-cols-12">
+                                    <div class="col-span-9">
+                                        <h3 class="text-gray-800 text-base font-medium">
+                                            {{ italianItem.name }}
+                                        </h3>
+                                        <p class="text-gray-700 text-sm font-medium pb-2 font-sans">
+                                           price : {{ italianItem.caloriesPerServing }}
+                                        </p>
+                                       
+                                        <p class="text-gray-600 text-sm font-normal">
+                                            {{ italianItem.instructions[1] }}
+                                        </p>
+                                    </div>
+                                    <div class="col-span-3 relative">
+                                        <img :src="italianItem.image" class="w-24 h-24 ml-auto">
+                                        <div class="absolute w-6 h-6 bottom-2 right-2 cursor-pointer bg-white hover:bg-pink-50 duration-75 rounded-full">
+                                            <img src="../svg/plus.svg" class="grid place-items-center">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- <div v-for="italianItem in italianItems" :key="italianItem.id" class="">
+                            <img :src="italianItem.image" class="w-20">
+                        </div> -->
+
+                    </div>
+                    <div class="mt-5">
+                        <h3 class="text-gray-800 text-lg font-semibold pb-3">
+                            Asian
+                        </h3>
+                        <div class="grid grid-cols-12 gap-3 ">
+                            <div v-for="asianItem in asianItems" :key="asianItem.id" class="col-span-6 cursor-pointer hover:bg-pink-100 duration-200 hover:shadow p-3 border border-gray-200 rounded">
+                                <div class="grid grid-cols-12 ">
+                                    <div class="col-span-9">
+                                        <h3 class="text-gray-800 text-base font-medium">
+                                            {{ asianItem.name }}
+                                        </h3>
+                                        <p class="text-gray-700 text-sm font-medium pb-2 font-sans">
+                                           price : {{ asianItem.caloriesPerServing }}
+                                        </p>
+                                       
+                                        <p class="text-gray-600 text-sm font-normal">
+                                            {{ asianItem.instructions[1] }}
+                                        </p>
+                                    </div>
+                                    <div class="col-span-3 relative">
+                                        <img :src="asianItem.image" class="w-24 h-24 ml-auto">
+                                        <div class="absolute w-6 h-6 bottom-2 right-2 cursor-pointer bg-white hover:bg-pink-50 duration-75 rounded-full">
+                                            <img src="../svg/plus.svg" class="grid place-items-center">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                        </div>
+                        <!-- <div v-for="italianItem in italianItems" :key="italianItem.id" class="">
+                            <img :src="italianItem.image" class="w-20">
+                        </div> -->
+
+                    </div>
+                    <div class="mt-5">
+                        <h3 class="text-gray-800 text-lg font-semibold pb-3">
+                            American
+                        </h3>
+                        <div class="grid grid-cols-12 gap-3 ">
+                            <div v-for="americanItem in americanItems" :key="americanItem.id" class="col-span-6 cursor-pointer hover:bg-pink-100 duration-200 hover:shadow p-3 border border-gray-200 rounded">
+                                <div class="grid grid-cols-12 ">
+                                    <div class="col-span-9">
+                                        <h3 class="text-gray-800 text-base font-medium">
+                                            {{ americanItem.name }}
+                                        </h3>
+                                        <p class="text-gray-700 text-sm font-medium pb-2 font-sans">
+                                           price : {{ americanItem.caloriesPerServing }}
+                                        </p>
+                                       
+                                        <p class="two-line text-gray-600 text-sm font-normal">
+                                            {{ americanItem.instructions[3] }}
+                                        </p>
+                                    </div>
+                                    <div class="col-span-3 relative">
+                                        <img :src="americanItem.image" class="w-24 h-24 ml-auto">
+                                        <div class="absolute w-6 h-6 bottom-2 right-2 cursor-pointer bg-white hover:bg-pink-50 duration-75 rounded-full">
+                                            <img src="../svg/plus.svg" class="grid place-items-center">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
                 <div class="col-span-4 bg-pink-100">
                     <h3>
@@ -46,5 +177,13 @@ console.log(uniqueItems.value)
 
 
 <style>
+
+.two-line{
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+
+}
+
 
 </style>
