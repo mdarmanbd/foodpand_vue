@@ -1,5 +1,5 @@
 <script setup>
-import { reactive, ref } from 'vue';
+import { reactive, ref, watch } from 'vue';
 import MenuCart from './MenuCart.vue';
 import axios from 'axios';
 
@@ -7,7 +7,10 @@ import axios from 'axios';
 const italianItems = ref([]);
 const asianItems = ref([]);
 const americanItems = ref([]);
-const Items = ref([]);
+// const menuItems = ref([]);
+
+const parseMenuItems = JSON.parse(localStorage.getItem('menuItems')) || [];
+const menuItems = ref(parseMenuItems);
 
 // const cuisineItems = ref([]);
 // const uniqueCuisines = ref([]);
@@ -54,53 +57,58 @@ americanMenus();
 
 
 const selectItalianItems = (italianItem) => {
-    const index = Items.value.findIndex( items => items.id == italianItem.id )
+    const index = menuItems.value.findIndex( items => items.id == italianItem.id )
     if( index !== -1 ){
-        Items.value[index].quantity++;
+        menuItems.value[index].quantity++;
     }else{
-        Items.value.push( {
+        menuItems.value.push( {
                 ...italianItem,
                 quantity : 1
             }
         )
     }
     saveItemsInLocalstroage();
+    // window.location.reload();
 };
 
 const selectAsianItems = (italianItem) => {
-    const index = Items.value.findIndex( items => items.id == italianItem.id )
+    const index = menuItems.value.findIndex( items => items.id == italianItem.id )
     if( index !== -1 ){
-        Items.value[index].quantity++;
+        menuItems.value[index].quantity++;
     }else{
-        Items.value.push( {
+        menuItems.value.push( {
                 ...italianItem,
                 quantity : 1
             }
         )
     }
     saveItemsInLocalstroage();
+    // window.location.reload();
 };
 
 const selectAmericanItems = (italianItem) => {
-    const index = Items.value.findIndex( items => items.id == italianItem.id )
+    const index = menuItems.value.findIndex( items => items.id == italianItem.id )
     if( index !== -1 ){
-        Items.value[index].quantity++;
+        menuItems.value[index].quantity++;
     }else{
-        Items.value.push( {
+        menuItems.value.push( {
                 ...italianItem,
                 quantity : 1
             }
         )
     }
     saveItemsInLocalstroage();
+    // window.location.reload();
 };
 
 
 const saveItemsInLocalstroage = () => {
-    localStorage.setItem('Items', JSON.stringify(Items.value));
+    localStorage.setItem('menuItems', JSON.stringify(menuItems.value));
 }
 
-
+watch(() => {
+   saveItemsInLocalstroage()
+});
 
 </script>
 
