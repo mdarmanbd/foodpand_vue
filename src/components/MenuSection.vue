@@ -1,5 +1,5 @@
 <script setup>
-import { reactive, ref, watch } from 'vue';
+import { reactive, ref, watch, onMounted, onUnmounted  } from 'vue';
 import MenuCart from './MenuCart.vue';
 import axios from 'axios';
 
@@ -12,22 +12,7 @@ const americanItems = ref([]);
 const parseMenuItems = JSON.parse(localStorage.getItem('menuItems')) || [];
 const menuItems = ref(parseMenuItems);
 
-// const cuisineItems = ref([]);
-// const uniqueCuisines = ref([]);
-// const cuisineSet = new Set();
 
-// axios.get('https://dummyjson.com/recipes?limit=10')
-// .then(response => {
-//     cuisineItems.value = response.data.recipes
-
-//     for (let i = 0; i < cuisineItems.value.length; i++) {
-//         const cuisine = cuisineItems.value[i].cuisine;
-//         if (!cuisineSet.has(cuisine)) {
-//             cuisineSet.add(cuisine);
-//             uniqueCuisines.value.push(cuisine);
-//         }
-//     }
-// })
 
 const italianMenus = () => {
     axios.get('https://dummyjson.com/recipes?limit=5&select=name,caloriesPerServing,instructions,image')
@@ -55,63 +40,25 @@ italianMenus();
 asianMenus();
 americanMenus();
 
-
-const selectItalianItems = (italianItem) => {
-    const index = menuItems.value.findIndex( items => items.id == italianItem.id )
+const selectItems = (foodItem) => {
+    const index = menuItems.value.findIndex( item => item.id == foodItem.id )
     if( index !== -1 ){
         menuItems.value[index].quantity++;
     }else{
         menuItems.value.push( {
-                ...italianItem,
+                ...foodItem,
                 quantity : 1
             }
         )
     }
     saveItemsInLocalstroage();
-    // window.location.reload();
 };
-
-const selectAsianItems = (italianItem) => {
-    const index = menuItems.value.findIndex( items => items.id == italianItem.id )
-    if( index !== -1 ){
-        menuItems.value[index].quantity++;
-    }else{
-        menuItems.value.push( {
-                ...italianItem,
-                quantity : 1
-            }
-        )
-    }
-    saveItemsInLocalstroage();
-    // window.location.reload();
-};
-
-const selectAmericanItems = (italianItem) => {
-    const index = menuItems.value.findIndex( items => items.id == italianItem.id )
-    if( index !== -1 ){
-        menuItems.value[index].quantity++;
-    }else{
-        menuItems.value.push( {
-                ...italianItem,
-                quantity : 1
-            }
-        )
-    }
-    saveItemsInLocalstroage();
-    // window.location.reload();
-};
-
 
 const saveItemsInLocalstroage = () => {
     localStorage.setItem('menuItems', JSON.stringify(menuItems.value));
 }
 
-watch(() => {
-   saveItemsInLocalstroage()
-});
-
 </script>
-
 
 <template>
     <section class="w-full bg-white mt-10">
@@ -127,7 +74,7 @@ watch(() => {
                         </h3>
                         <div class="grid grid-cols-12 gap-3 ">
                             <div v-for="italianItem in italianItems" :key="italianItem.id" class="col-span-6 cursor-pointer hover:bg-pink-100 duration-200 hover:shadow p-3 border border-gray-200 rounded">
-                                <div @click="selectItalianItems(italianItem)" class="grid grid-cols-12">
+                                <div @click="selectItems(italianItem)" class="grid grid-cols-12">
                                     <div class="col-span-9">
                                         <h3 class="text-gray-800 text-base font-medium">
                                             {{ italianItem.name }}
@@ -156,7 +103,7 @@ watch(() => {
                         </h3>
                         <div class="grid grid-cols-12 gap-3 ">
                             <div v-for="asianItem in asianItems" :key="asianItem.id" class="col-span-6 cursor-pointer hover:bg-pink-100 duration-200 hover:shadow p-3 border border-gray-200 rounded">
-                                <div @click="selectAsianItems(asianItem)" class="grid grid-cols-12 ">
+                                <div @click="selectItems(asianItem)" class="grid grid-cols-12 ">
                                     <div class="col-span-9">
                                         <h3 class="text-gray-800 text-base font-medium">
                                             {{ asianItem.name }}
@@ -185,7 +132,7 @@ watch(() => {
                         </h3>
                         <div class="grid grid-cols-12 gap-3 ">
                             <div v-for="americanItem in americanItems" :key="americanItem.id" class="col-span-6 cursor-pointer hover:bg-pink-100 duration-200 hover:shadow p-3 border border-gray-200 rounded">
-                                <div @click="selectAmericanItems(americanItem)" class="grid grid-cols-12 ">
+                                <div @click="selectItems(americanItem)" class="grid grid-cols-12 ">
                                     <div class="col-span-9">
                                         <h3 class="text-gray-800 text-base font-medium">
                                             {{ americanItem.name }}
@@ -210,7 +157,7 @@ watch(() => {
                     </div>
                 </div>
                 <div class="col-span-4 ">
-                    <MenuCart/>
+                    <MenuCart :menuItems = 'menuItems' />
                 </div>
             </div>
             
