@@ -7,7 +7,7 @@ import axios from 'axios';
 const italianItems = ref([]);
 const asianItems = ref([]);
 const americanItems = ref([]);
-// const menuItems = ref([]);
+
 
 const parseMenuItems = JSON.parse(localStorage.getItem('menuItems')) || [];
 const menuItems = ref(parseMenuItems);
@@ -47,16 +47,24 @@ const selectItems = (foodItem) => {
     }else{
         menuItems.value.push( {
                 ...foodItem,
-                quantity : 1
+                quantity : 1,
+                showDeletBtn : true
             }
         )
     }
-    saveItemsInLocalstroage();
+    saveItemsInLocalStorage();
 };
 
-const saveItemsInLocalstroage = () => {
+const saveItemsInLocalStorage = () => {
     localStorage.setItem('menuItems', JSON.stringify(menuItems.value));
+};
+
+const updatedMenuItems = (updatedMenu) => {
+    menuItems.value = updatedMenu;
+    saveItemsInLocalStorage();
 }
+
+
 
 </script>
 
@@ -157,7 +165,7 @@ const saveItemsInLocalstroage = () => {
                     </div>
                 </div>
                 <div class="col-span-4 ">
-                    <MenuCart :menuItems = 'menuItems' />
+                    <MenuCart :menuItems = 'menuItems' @updatedItem = 'updatedMenuItems' />
                 </div>
             </div>
             

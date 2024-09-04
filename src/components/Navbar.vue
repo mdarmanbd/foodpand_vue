@@ -1,6 +1,8 @@
 <script setup>
-
-
+import { reactive } from 'vue';
+// const parseMenuItems = JSON.parse(localStorage.getItem('menuItems'))
+// const menuItems = reactive(parseMenuItems)
+// console.log(menuItems.length);
 
 </script>
 
