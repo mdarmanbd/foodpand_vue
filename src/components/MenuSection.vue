@@ -3,23 +3,19 @@ import { reactive, ref, watch, onMounted, onUnmounted  } from 'vue';
 import MenuCart from './MenuCart.vue';
 import axios from 'axios';
 
-
 const italianItems = ref([]);
 const asianItems = ref([]);
 const americanItems = ref([]);
 
-
 const parseMenuItems = JSON.parse(localStorage.getItem('menuItems')) || [];
+
 const menuItems = ref(parseMenuItems);
-
-
 
 const italianMenus = () => {
     axios.get('https://dummyjson.com/recipes?limit=5&select=name,caloriesPerServing,instructions,image')
     .then (response => {
         italianItems.value = response.data.recipes
     })
-
 };
 
 const asianMenus = () => {

@@ -1,6 +1,5 @@
 <script setup>
-import { computed } from 'vue';
-import { store } from '../store/store';
+import slider from './slider.vue';
 
 const props = defineProps([
     'menuItems'
@@ -95,6 +94,9 @@ const totalPrice = ()=>{
                     </div>
                 </div>
             </div>
+        </div>
+        <div class="w-full">
+            <slider/>
         </div>
         <div class="py-2 px-5 border-t shadow-lg">
            <div class="flex justify-between ">

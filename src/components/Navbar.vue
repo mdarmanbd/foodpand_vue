@@ -1,8 +1,16 @@
 <script setup>
+import { ref } from 'vue';
 import { reactive } from 'vue';
-// const parseMenuItems = JSON.parse(localStorage.getItem('menuItems'))
-// const menuItems = reactive(parseMenuItems)
-// console.log(menuItems.length);
+import { store } from '../store/store';
+
+const menuItems = ref(null);
+const numberOfMenuItem = ref(null);
+setInterval(()=>{
+    menuItems.value = JSON.parse(localStorage.getItem('menuItems')) || [];
+    numberOfMenuItem.value = menuItems.value.length;
+},500)
+
+
 
 </script>
 
@@ -29,8 +37,11 @@ import { reactive } from 'vue';
                 <button class="bg-colorBase border rounded px-2.5 py-1 text-white text-sm font-normal transition duration-300 ease-in-out hover:translate-y-1 ">
                     Sign up
                 </button>
-                <div class="pr-2">
+                <div class="pr-2 flex items-center ">
                     <img class="w-7" src="../svg/shoppingBag.svg">
+                    <span class="text-pink-600 text-lg font-medium pl-1">
+                        {{ numberOfMenuItem }}
+                    </span>
                 </div>
             </div>
         </nav>
