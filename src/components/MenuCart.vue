@@ -5,6 +5,7 @@ const props = defineProps([
     'menuItems'
 ])
 
+
 const emit = defineEmits(['updatedItem'])
 
 const incrimentItem = (item) => {
@@ -35,7 +36,6 @@ const deletItem = (item) => {
     menuItems.splice(index, 1);
     emit('updatedItem', props.menuItems); 
 }
-
 
 const totalPrice = ()=>{
     let total = 0;
@@ -95,9 +95,11 @@ const totalPrice = ()=>{
                 </div>
             </div>
         </div>
+        <!--- slider start --->
         <div class="w-full">
-            <slider/>
+            <slider :menuItems = 'props.menuItems' />
         </div>
+        <!--- slider end --->
         <div class="py-2 px-5 border-t shadow-lg">
            <div class="flex justify-between ">
                 <p class="text-base font-semibold text-gray-800">

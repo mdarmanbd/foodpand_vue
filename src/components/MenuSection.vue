@@ -8,7 +8,6 @@ const asianItems = ref([]);
 const americanItems = ref([]);
 
 const parseMenuItems = JSON.parse(localStorage.getItem('menuItems')) || [];
-
 const menuItems = ref(parseMenuItems);
 
 const italianMenus = () => {
