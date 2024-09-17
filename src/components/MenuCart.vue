@@ -46,6 +46,12 @@ const totalPrice = ()=>{
     return(total);
 }
 
+const updatedMenuItems = (menuItems) => {
+    props.menuItems = menuItems
+    emit('updatedItem', props.menuItems); 
+}
+
+
 </script>
 
 <template>
@@ -97,7 +103,7 @@ const totalPrice = ()=>{
         </div>
         <!--- slider start --->
         <div class="w-full">
-            <slider :menuItems = 'props.menuItems' />
+            <slider :menuItems = 'props.menuItems' @updatedSlideItems = 'updatedMenuItems' />
         </div>
         <!--- slider end --->
         <div class="py-2 px-5 border-t shadow-lg">
