@@ -27,7 +27,10 @@ export default {
         'barger' : "url('https://images.deliveryhero.io/image/fd-bd/LH/e2qk-listing.jpg?width=400&height=225')",
         'nori' : "url('https://images.deliveryhero.io/image/fd-bd/LH/oxpe-listing.jpg?width=400&height=225')",
         'dalifarnce' : "url('https://images.deliveryhero.io/image/fd-bd/LH/k7tq-listing.jpg?width=400&height=225')",
-      }
+      },
+      boxShadow: {
+        'top-md': '0 -20px 10px -8px rgba(0, 0, 0, 0.1), 0 -20px 10px -8px rgba(0, 0, 0, 0.06)',
+      },
     },
   },
   plugins: [],

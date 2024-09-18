@@ -1,24 +1,18 @@
 <script setup>
 import { ref, computed } from 'vue';
 import axios from 'axios';
-import { store } from '../store/store';
 
 const italianItems = ref([]);
 const currentIndex = ref(0);
-
-
-
 const props = defineProps([
     'menuItems'
 ])
-
 const menuItems = props.menuItems;
-
 const emit = defineEmits(['updatedSlideItems'], ['updatedVat'])
 
 // Fetch the data
 const italianMenus = () => {
-    axios.get('https://dummyjson.com/recipes?limit=5&select=name,caloriesPerServing,instructions,image')
+    axios.get('https://dummyjson.com/recipes?limit=20&select=name,caloriesPerServing,instructions,image')
     .then(response => {
         italianItems.value = response.data.recipes;
     });
@@ -57,7 +51,6 @@ const selectSliderItem = (italianItem) => {
     }
 }
 
-
 const totalPrice = computed( () => {
     let total = 0;
     for(let item of menuItems){
@@ -71,9 +64,6 @@ const vat = computed(() => {
     emit('updatedVat', vatValue);
     return vatValue;
 });
-
-
-
 
 </script>
 
@@ -142,7 +132,7 @@ const vat = computed(() => {
                 <p class="font-sans">Tk {{ vat }}</p>
             </li>
         </ul>
-        <div class="py-4 px-3 border-b border-pink-300">
+        <div class="py-2 px-3 border-b border-pink-300">
             <div class="flex items-start space-x-3">
                 <img class="w-6" src="../svg/kitchen.svg">
                 <p class="text-gray-600 text-base font-normal w-[55%]">

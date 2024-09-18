@@ -1,5 +1,6 @@
 <script setup>
 import { ref } from 'vue';
+import router from '../router/router';
 import slider from './slider.vue';
 
 const vatValue = ref(0);
@@ -46,7 +47,7 @@ const totalPrice = ()=>{
     let total = 0;
     let menuItems = props.menuItems;
     for(let item of menuItems){
-        total = total + (item.caloriesPerServing * item.quantity) + vatValue.value;
+        total = total + (item.caloriesPerServing * item.quantity) + vatValue.value + 59;
     }
     return(total);
 }
@@ -55,8 +56,6 @@ const updatedMenuItems = (menuItems) => {
     props.menuItems = menuItems
     emit('updatedItem', props.menuItems); 
 }
-
-
 
 </script>
 
@@ -106,13 +105,14 @@ const updatedMenuItems = (menuItems) => {
                     </div>
                 </div>
             </div>
+
+             <!--- slider start --->
+            <div v-if="menuItems.length" class="w-full">
+                <slider :menuItems = 'props.menuItems' @updatedSlideItems = 'updatedMenuItems'  @updatedVat = 'vat' />
+            </div>
+            <!--- slider end --->
         </div>
-        <!--- slider start --->
-        <div class="w-full">
-            <slider :menuItems = 'props.menuItems' @updatedSlideItems = 'updatedMenuItems'  @updatedVat = 'vat' />
-        </div>
-        <!--- slider end --->
-        <div class="py-2 px-5 border-t shadow-lg">
+        <div class="py-4 px-5 border-t shadow-top-md">
            <div class="flex justify-between ">
                 <p class="text-base font-semibold text-gray-800">
                     Total
@@ -124,9 +124,16 @@ const updatedMenuItems = (menuItems) => {
                    TK : {{ totalPrice() }} 
                 </p>
            </div>
-           <button class="w-full py-2 mt-2 text-center bg-gray-300 text-white rounded text-base font-normal">
+           <button v-if="!menuItems.length" class="w-full py-2 mt-2 text-center bg-gray-300 text-white rounded text-base font-normal">
                 Review payment and address
            </button>
+            
+            <button v-if="menuItems.length" class="w-full py-2 mt-2 text-center bg-pink-600 text-white rounded text-base font-normal">
+                <router-link to="/LoginForm">
+                    Review payment and address
+                </router-link>
+            </button>
+            
         </div>
     </section>
 </template>

@@ -5,7 +5,7 @@
 
 <template>
   <navbar/>
-  <RouterView></RouterView>
+  <router-view></router-view>
 
  
 </template>

@@ -2,13 +2,11 @@
 import { reactive, ref, watch, onMounted, onUnmounted  } from 'vue';
 import MenuCart from './MenuCart.vue';
 import axios from 'axios';
-import { store } from '../store/store';
-
-console.log(store.vat)
 
 const italianItems = ref([]);
 const asianItems = ref([]);
 const americanItems = ref([]);
+const thaiItems = ref([]);
 
 const parseMenuItems = JSON.parse(localStorage.getItem('menuItems')) || [];
 const menuItems = ref(parseMenuItems);
@@ -34,9 +32,17 @@ const americanMenus = () => {
     })
 };
 
+const thaiMenus = () => {
+    axios.get('https://dummyjson.com/recipes?limit=8&skip=10&select=name,caloriesPerServing,instructions,image')
+    .then(response => {
+        thaiItems.value = response.data.recipes
+    })
+};
+
 italianMenus();
 asianMenus();
 americanMenus();
+thaiMenus();
 
 const selectItems = (foodItem) => {
     const index = menuItems.value.findIndex( item => item.id == foodItem.id )
@@ -61,8 +67,6 @@ const updatedMenuItems = (updatedMenu) => {
     menuItems.value = updatedMenu;
     saveItemsInLocalStorage();
 }
-
-
 
 </script>
 
@@ -161,6 +165,37 @@ const updatedMenuItems = (updatedMenu) => {
                             </div>
                         </div>
                     </div>
+
+                    <div class="mt-5">
+                        <h3 class="text-gray-800 text-lg font-semibold pb-3">
+                            Mexican 
+                        </h3>
+                        <div class="grid grid-cols-12 gap-3 ">
+                            <div v-for="thaiItem in thaiItems" :key="thaiItem.id" class="col-span-6 cursor-pointer hover:bg-pink-100 duration-200 hover:shadow p-3 border border-gray-200 rounded">
+                                <div @click="selectItems(thaiItem)" class="grid grid-cols-12 ">
+                                    <div class="col-span-9">
+                                        <h3 class="text-gray-800 text-base font-medium">
+                                            {{ thaiItem.name }}
+                                        </h3>
+                                        <p class="text-gray-700 text-sm font-medium pb-2 font-sans">
+                                           price : {{ thaiItem.caloriesPerServing }}
+                                        </p>
+                                       
+                                        <p class="two-line text-gray-600 text-sm font-normal pr-1 pb-1">
+                                            {{ thaiItem.instructions[4] }}
+                                        </p>
+                                    </div>
+                                    <div class="col-span-3 relative">
+                                        <img :src="thaiItem.image" class="w-24 h-24 ml-auto">
+                                        <div class="absolute w-6 h-6 bottom-2 right-2 cursor-pointer bg-white hover:bg-pink-50 duration-75 rounded-full">
+                                            <img src="../svg/plus.svg" class="grid place-items-center">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
                 </div>
                 <div class="col-span-4 ">
                     <MenuCart :menuItems = 'menuItems' @updatedItem = 'updatedMenuItems' />
@@ -174,12 +209,7 @@ const updatedMenuItems = (updatedMenu) => {
 
 <style>
 
-.two-line{
-    display: -webkit-box;
-    -webkit-line-clamp: 2;
-    -webkit-box-orient: vertical;
 
-}
 
 
 </style>
