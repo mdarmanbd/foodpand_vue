@@ -4,8 +4,7 @@ const store = reactive({
     numberOfMenuItems : 0,
 
     itemCount : 0,
-    
-    
+   
 
 })
 

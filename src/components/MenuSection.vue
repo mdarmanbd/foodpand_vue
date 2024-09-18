@@ -2,6 +2,9 @@
 import { reactive, ref, watch, onMounted, onUnmounted  } from 'vue';
 import MenuCart from './MenuCart.vue';
 import axios from 'axios';
+import { store } from '../store/store';
+
+console.log(store.vat)
 
 const italianItems = ref([]);
 const asianItems = ref([]);

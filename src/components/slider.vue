@@ -1,10 +1,12 @@
 <script setup>
 import { ref, computed } from 'vue';
 import axios from 'axios';
-
+import { store } from '../store/store';
 
 const italianItems = ref([]);
 const currentIndex = ref(0);
+
+
 
 const props = defineProps([
     'menuItems'
@@ -12,7 +14,7 @@ const props = defineProps([
 
 const menuItems = props.menuItems;
 
-const emit = defineEmits(['updatedSlideItems'])
+const emit = defineEmits(['updatedSlideItems'], ['updatedVat'])
 
 // Fetch the data
 const italianMenus = () => {
@@ -54,6 +56,24 @@ const selectSliderItem = (italianItem) => {
         emit('updatedSlideItems', menuItems)
     }
 }
+
+
+const totalPrice = computed( () => {
+    let total = 0;
+    for(let item of menuItems){
+        total = total + (item.caloriesPerServing * item.quantity);
+    }
+    return total;
+})
+
+const vat = computed(() => {
+    const vatValue = Math.round((totalPrice.value * 2.5) / 100);
+    emit('updatedVat', vatValue);
+    return vatValue;
+});
+
+
+
 
 </script>
 
@@ -99,7 +119,7 @@ const selectSliderItem = (italianItem) => {
         <ul class="border-b border-pink-300 pb-4">
             <li class="text-gray-600 text-base font-normal flex justify-between items-center pb-1.5 px-3">
                 <p>Subtotal</p>
-                <p class="font-sans">Tk 00</p>
+                <p class="font-sans">Tk {{ totalPrice }}</p>
             </li>
             <li class="text-gray-600 text-base font-normal flex justify-between items-center pb-1.5 px-3">
                 <p>Standard delivery 
@@ -111,7 +131,7 @@ const selectSliderItem = (italianItem) => {
             </li>
             <li class="text-gray-600 text-base font-normal flex justify-between items-center pb-1.5 px-3">
                 <p>Service fee</p>
-                <p class="font-sans">Tk 01</p>
+                <p class="font-sans">Tk 9</p>
             </li>
             <li class="text-gray-600 text-base font-normal flex justify-between items-center pb-1.5 px-3">
                 <p>Container charges</p>
@@ -119,7 +139,7 @@ const selectSliderItem = (italianItem) => {
             </li>
             <li class="text-gray-600 text-base font-normal flex justify-between items-center pb-1.5 px-3">
                 <p>Vat</p>
-                <p class="font-sans">Tk 87</p>
+                <p class="font-sans">Tk {{ vat }}</p>
             </li>
         </ul>
         <div class="py-4 px-3 border-b border-pink-300">

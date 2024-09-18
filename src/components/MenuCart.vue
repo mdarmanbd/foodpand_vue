@@ -1,10 +1,11 @@
 <script setup>
+import { ref } from 'vue';
 import slider from './slider.vue';
 
+const vatValue = ref(0);
 const props = defineProps([
     'menuItems'
 ])
-
 
 const emit = defineEmits(['updatedItem'])
 
@@ -37,11 +38,15 @@ const deletItem = (item) => {
     emit('updatedItem', props.menuItems); 
 }
 
+const vat = (value) => {
+    vatValue.value = value;
+}
+
 const totalPrice = ()=>{
     let total = 0;
     let menuItems = props.menuItems;
     for(let item of menuItems){
-        total = total + (item.caloriesPerServing * item.quantity);
+        total = total + (item.caloriesPerServing * item.quantity) + vatValue.value;
     }
     return(total);
 }
@@ -50,6 +55,7 @@ const updatedMenuItems = (menuItems) => {
     props.menuItems = menuItems
     emit('updatedItem', props.menuItems); 
 }
+
 
 
 </script>
@@ -103,7 +109,7 @@ const updatedMenuItems = (menuItems) => {
         </div>
         <!--- slider start --->
         <div class="w-full">
-            <slider :menuItems = 'props.menuItems' @updatedSlideItems = 'updatedMenuItems' />
+            <slider :menuItems = 'props.menuItems' @updatedSlideItems = 'updatedMenuItems'  @updatedVat = 'vat' />
         </div>
         <!--- slider end --->
         <div class="py-2 px-5 border-t shadow-lg">
